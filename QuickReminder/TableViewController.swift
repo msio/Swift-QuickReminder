@@ -10,16 +10,18 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    @IBAction func datePickerVisible() {
-    }
-    
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var datePicker: UIDatePicker!
-
+    @IBOutlet weak var inputText: UITextField!
+    @IBOutlet weak var inputDate: UILabel!
+    @IBOutlet weak var onOffTime: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.hideAddBarButton(hide: true)
         self.datePicker.isHidden = true
+        //self.onOffTime.setImage(UIApplicationShortcutIcon, for: UIControlState.highlighted)
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,24 +30,50 @@ class TableViewController: UITableViewController {
     }
     
     @IBAction func addReminderAction(_ sender: Any) {
-        self.view.endEditing(true);
-        self.datePicker.isHidden = true
-        print("Cancel")
+        self.endEditMode()
+        print("Add")
     }
 
     @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
-        self.view.endEditing(true);
-        self.datePicker.isHidden = true
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        self.endEditMode()
     }
 
+    private func endEditMode(){
+        self.view.endEditing(true);
+        self.datePicker.isHidden = true
+        self.hideAddBarButton(hide: true)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        self.inputText.text = ""
+    }
+    
     @IBAction func reminderTextEditingDidBegin(_ sender: Any) {
         self.hideAddBarButton(hide: false)
+        updateDate()
         self.datePicker.isHidden = false
         tableView.beginUpdates()
         tableView.endUpdates()
 
+    }
+    
+    private func updateDate(){
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        if(calendar.isDateInToday(self.datePicker.date)){
+            dateFormatter.dateFormat = "HH:mm"
+            self.inputDate.text = "Today \(dateFormatter.string(from: self.datePicker.date))"
+        }else {
+            if(calendar.component(.year, from: currentDate) == calendar.component(.year, from: self.datePicker.date)){
+                dateFormatter.dateFormat = "dd.MM. HH:mm"
+            }
+            self.inputDate.text  = dateFormatter.string(from: self.datePicker.date)
+        }
+ 
+    }
+    
+    @IBAction func datePickerChanged(_ sender: Any) {
+        self.updateDate()
     }
     
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -61,7 +89,6 @@ class TableViewController: UITableViewController {
     
     
     override func tableView(_ tableView:UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print(self.datePicker.isHidden)
         if self.datePicker.isHidden && indexPath.row == 1 {
             return 0
         }
@@ -70,24 +97,13 @@ class TableViewController: UITableViewController {
         }
     }
 
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 2
-    }
-    
     private func hideAddBarButton(hide:Bool){
         if(hide){
-//            self.addBarButton.isEnabled = false;
-//            self.addBarButton.tintColor = UIColor.clear
+            self.addBarButton.isEnabled = false;
+            self.addBarButton.tintColor = UIColor.clear
         }else{
-//            self.addBarButton.isEnabled = true;
-//            self.addBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+            self.addBarButton.isEnabled = true;
+            self.addBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
         }
     }
 
