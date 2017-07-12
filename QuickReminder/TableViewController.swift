@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesome_swift
 
 class TableViewController: UITableViewController {
     
@@ -14,15 +15,19 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var inputText: UITextField!
     @IBOutlet weak var inputDate: UILabel!
-    @IBOutlet weak var onOffTime: UIButton!
+    @IBOutlet weak var onOffNotifButton: UIButton!
+    
+    private var isNotifOn: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         self.hideAddBarButton(hide: true)
         self.datePicker.isHidden = true
-        //self.onOffTime.setImage(UIApplicationShortcutIcon, for: UIControlState.highlighted)
+        self.onOffNotifButton.isHidden = true;
+        self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
+        self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -37,6 +42,21 @@ class TableViewController: UITableViewController {
     @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
         self.endEditMode()
     }
+    
+    @IBAction func onOffNotifPrimaryActionTriggered(_ sender: Any) {
+        if(self.isNotifOn){
+            //set to off
+            self.datePicker.isHidden = true
+            self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bellO), for: .normal)
+        }else{
+            //set to on
+            self.datePicker.isHidden = false
+            self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
+        }
+        self.isNotifOn  = !isNotifOn
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
 
     private func endEditMode(){
         self.view.endEditing(true);
@@ -49,11 +69,16 @@ class TableViewController: UITableViewController {
     
     @IBAction func reminderTextEditingDidBegin(_ sender: Any) {
         self.hideAddBarButton(hide: false)
+        self.onOffNotifButton.isHidden = false;
         updateDate()
         self.datePicker.isHidden = false
         tableView.beginUpdates()
         tableView.endUpdates()
 
+    }
+    
+    @IBAction func reminderTextEditingDidEnd(_ sender: Any) {
+        self.onOffNotifButton.isHidden = true;
     }
     
     private func updateDate(){

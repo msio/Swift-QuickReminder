@@ -24,13 +24,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zcf-P3-vVG" id="VfK-Yx-hML">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wR-lp-RGf">
-                                                    <rect key="frame" x="272" y="11" width="22" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </button>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="new Reminder" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20f-HR-ESs">
                                                     <rect key="frame" x="17" y="7" width="235" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -39,6 +35,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <action selector="reminderTextEditingDidBegin:" destination="HOx-kE-hlX" eventType="editingDidBegin" id="YRe-Of-BRP"/>
+                                                        <action selector="reminderTextEditingDidEnd:" destination="HOx-kE-hlX" eventType="editingDidEnd" id="Pch-nC-Lw6"/>
                                                         <action selector="reminderTextPrimaryActionTriggered:" destination="HOx-kE-hlX" eventType="primaryActionTriggered" id="RsE-he-MgZ"/>
                                                     </connections>
                                                 </textField>
@@ -49,6 +46,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alw-Z9-wbq">
+                                                    <rect key="frame" x="272" y="7" width="34" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Time"/>
+                                                    <connections>
+                                                        <action selector="onOffNotifPrimaryActionTriggered:" destination="HOx-kE-hlX" eventType="primaryActionTriggered" id="BPj-SA-uIZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -56,7 +61,7 @@
                                         <rect key="frame" x="0.0" y="44" width="320" height="218"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L2c-uI-sAx" id="Jis-NV-pXY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="217.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="gmc-dU-ACd">
@@ -92,7 +97,7 @@
                         <outlet property="datePicker" destination="gmc-dU-ACd" id="Mmm-fU-LZa"/>
                         <outlet property="inputDate" destination="YCt-mI-61p" id="qh3-1J-1Lb"/>
                         <outlet property="inputText" destination="20f-HR-ESs" id="695-zV-ZXV"/>
-                        <outlet property="onOffTime" destination="0wR-lp-RGf" id="3Ej-Kw-5Fz"/>
+                        <outlet property="onOffNotifButton" destination="alw-Z9-wbq" id="G2w-v7-3Bz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKh-SU-1As" userLabel="First Responder" sceneMemberID="firstResponder"/>
