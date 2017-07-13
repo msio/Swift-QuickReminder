@@ -42,6 +42,10 @@ class TableViewController: UITableViewController {
         print("Add")
     }
 
+    @IBAction func reminderTextEditingDidChanged(_ sender: Any) {
+        self.addBarButton.isEnabled = self.inputText.hasText
+    }
+    
     @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
         self.endEditMode()
     }
@@ -70,10 +74,14 @@ class TableViewController: UITableViewController {
         tableView.beginUpdates()
         tableView.endUpdates()
         self.inputText.text = ""
+        self.inputDate.isHidden = true
     }
     
     @IBAction func reminderTextEditingDidBegin(_ sender: Any) {
         self.hideAddBarButton(hide: false)
+        //set only not clickable
+        self.addBarButton.isEnabled = self.inputText.hasText
+        self.inputDate.isHidden = false
         self.onOffNotifButton.isHidden = false;
         updateDate()
         self.datePicker.isHidden = false

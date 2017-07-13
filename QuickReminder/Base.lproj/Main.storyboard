@@ -35,8 +35,8 @@
                                                         <action selector="onOffNotifPrimaryActionTriggered:" destination="HOx-kE-hlX" eventType="primaryActionTriggered" id="BPj-SA-uIZ"/>
                                                     </connections>
                                                 </button>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Rkg-ch-PSB">
-                                                    <rect key="frame" x="13" y="8" width="261" height="34.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Rkg-ch-PSB">
+                                                    <rect key="frame" x="13" y="8.5" width="261" height="33.5"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="new Reminder" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20f-HR-ESs">
                                                             <rect key="frame" x="0.0" y="0.0" width="261" height="17"/>
@@ -45,12 +45,13 @@
                                                             <textInputTraits key="textInputTraits"/>
                                                             <connections>
                                                                 <action selector="reminderTextEditingDidBegin:" destination="HOx-kE-hlX" eventType="editingDidBegin" id="YRe-Of-BRP"/>
+                                                                <action selector="reminderTextEditingDidChanged:" destination="HOx-kE-hlX" eventType="editingChanged" id="Ejy-0b-Jml"/>
                                                                 <action selector="reminderTextEditingDidEnd:" destination="HOx-kE-hlX" eventType="editingDidEnd" id="Pch-nC-Lw6"/>
                                                                 <action selector="reminderTextPrimaryActionTriggered:" destination="HOx-kE-hlX" eventType="primaryActionTriggered" id="RsE-he-MgZ"/>
                                                             </connections>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 17:15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCt-mI-61p">
-                                                            <rect key="frame" x="0.0" y="21" width="64.5" height="13.5"/>
+                                                            <rect key="frame" x="0.0" y="20" width="64.5" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
