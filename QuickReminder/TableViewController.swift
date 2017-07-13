@@ -26,6 +26,9 @@ class TableViewController: UITableViewController {
         self.onOffNotifButton.isHidden = true;
         self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
+        //tableView.rowHeight = UITableViewAutomaticDimension
+        //tableView.estimatedRowHeight = 50
+        
     }
 
 
@@ -47,10 +50,12 @@ class TableViewController: UITableViewController {
         if(self.isNotifOn){
             //set to off
             self.datePicker.isHidden = true
+            self.inputDate.isHidden = true;
             self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bellO), for: .normal)
         }else{
             //set to on
             self.datePicker.isHidden = false
+            self.inputDate.isHidden = false;
             self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
         }
         self.isNotifOn  = !isNotifOn
