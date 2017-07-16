@@ -7,112 +7,69 @@
 //
 
 import UIKit
-import FontAwesome_swift
 
-class TableViewController: UITableViewController {
+
+class TableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
-    @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var inputText: UITextField!
-    @IBOutlet weak var inputDate: UILabel!
-    @IBOutlet weak var onOffNotifButton: UIButton!
     
-    private var isNotifOn: Bool = true
+    private var items = ReminderItem.getMockData()
+    private var hideDatePickerRow:Bool = true;
+    
+    weak var delegateDP:DatePickerTableCellProtocol?
+    weak var delegateNR: NewReminderTableCellProtocol?
+    
+    var newReminderItem: ReminderItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideAddBarButton(hide: true)
-        self.datePicker.isHidden = true
-        self.onOffNotifButton.isHidden = true;
-        self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
-        self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
-        //tableView.rowHeight = UITableViewAutomaticDimension
-        //tableView.estimatedRowHeight = 50
-        
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func addReminderAction(_ sender: Any) {
-        self.endEditMode()
-        print("Add")
-    }
-
-    @IBAction func reminderTextEditingDidChanged(_ sender: Any) {
-        self.addBarButton.isEnabled = self.inputText.hasText
+    func datePickerChanged(date: Date) {
+        self.delegateDP?.datePickerChanged(date: date)
     }
     
-    @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
-        self.endEditMode()
-    }
-    
-    @IBAction func onOffNotifPrimaryActionTriggered(_ sender: Any) {
-        if(self.isNotifOn){
-            //set to off
-            self.datePicker.isHidden = true
-            self.inputDate.isHidden = true;
-            self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bellO), for: .normal)
-        }else{
-            //set to on
-            self.datePicker.isHidden = false
-            self.inputDate.isHidden = false;
-            self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
-        }
-        self.isNotifOn  = !isNotifOn
+    func onOffNotifPrimaryActionTriggered(isNotifOn: Bool) {
+        self.hideDatePickerRow = isNotifOn
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-
-    private func endEditMode(){
+    
+    func reminderTextPrimaryActionTriggered() {
         self.view.endEditing(true);
-        self.datePicker.isHidden = true
         self.hideAddBarButton(hide: true)
+        self.hideDatePickerRow = true
+        self.delegateNR?.reminderTextPrimaryActionTriggered()
         tableView.beginUpdates()
         tableView.endUpdates()
-        self.inputText.text = ""
-        self.inputDate.isHidden = true
+
+    }
+
+    func reminderTextEditingChanged(hasText:Bool) {
+         self.addBarButton.isEnabled = hasText
     }
     
-    @IBAction func reminderTextEditingDidBegin(_ sender: Any) {
+    func reminderTextEditingDidBegin() {
         self.hideAddBarButton(hide: false)
         //set only not clickable
-        self.addBarButton.isEnabled = self.inputText.hasText
-        self.inputDate.isHidden = false
-        self.onOffNotifButton.isHidden = false;
-        updateDate()
-        self.datePicker.isHidden = false
+        self.addBarButton.isEnabled = false
+        self.hideDatePickerRow = false
         tableView.beginUpdates()
         tableView.endUpdates()
+    }
+    
+//    @IBAction func addReminderAction(_ sender: Any) {
+//        self.endEditMode()
+//        print("Add")
+//    }
+//
 
-    }
-    
-    @IBAction func reminderTextEditingDidEnd(_ sender: Any) {
-        self.onOffNotifButton.isHidden = true;
-    }
-    
-    private func updateDate(){
-        let currentDate = Date()
-        let calendar = Calendar.current
-        let dateFormatter = DateFormatter()
-        if(calendar.isDateInToday(self.datePicker.date)){
-            dateFormatter.dateFormat = "HH:mm"
-            self.inputDate.text = "Today \(dateFormatter.string(from: self.datePicker.date))"
-        }else {
-            if(calendar.component(.year, from: currentDate) == calendar.component(.year, from: self.datePicker.date)){
-                dateFormatter.dateFormat = "dd.MM. HH:mm"
-            }
-            self.inputDate.text  = dateFormatter.string(from: self.datePicker.date)
-        }
- 
-    }
-    
-    @IBAction func datePickerChanged(_ sender: Any) {
-        self.updateDate()
-    }
     
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //
@@ -124,17 +81,56 @@ class TableViewController: UITableViewController {
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
     
+    @IBAction func addReminderItem(_ sender: Any) {
+        print(self.newReminderItem)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    
+        if(indexPath.row == 0){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "newReminderCell", for: indexPath) as! NewReminderTableCell
+            cell.delegate = self
+            if(!cell.cellAlreadyDidLoad){
+                cell.initCell(tableView:self)
+            }
+            return cell
+        }
+
+        if(indexPath.row == 1){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerTableCell
+            cell.delegate = self
+            if(!cell.cellAlreadyDidLoad){
+                cell.initCell(tableView:self)
+            }
+            return cell
+        }
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reminderCellItem", for: indexPath)
+        
+            let item = items[indexPath.row - 2]
+            cell.textLabel?.text = item.text
+        
+        return cell
+        
+    }
     
     
     override func tableView(_ tableView:UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.datePicker.isHidden && indexPath.row == 1 {
+        if self.hideDatePickerRow && indexPath.row == 1 {
             return 0
         }
-        else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
+        else if(!self.hideDatePickerRow && indexPath.row == 1){
+            return 218
         }
+        
+        return super.tableView(tableView, heightForRowAt: indexPath)
+        
     }
 
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return items.count + 2
+    }
+    
     private func hideAddBarButton(hide:Bool){
         if(hide){
             self.addBarButton.isEnabled = false;
