@@ -8,22 +8,47 @@
 
 import UIKit
 
+class TempReminderItem{
+    var completed:Bool
+    var text:String?
+    var notifDate:NSDate?
+    
+    init(){
+        self.completed = false
+    }
+
+}
 
 class TableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    private var items = ReminderItem.getMockData()
+    var items:[ReminderItem] = []
+    
     private var hideDatePickerRow:Bool = true;
     
     weak var delegateDP:DatePickerTableCellProtocol?
     weak var delegateNR: NewReminderTableCellProtocol?
     
-    var newReminderItem: ReminderItem?
+    var tempReminderItem = TempReminderItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideAddBarButton(hide: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.getData()
+    }
+    
+    func getData(){
+        do {
+            items = try context.fetch(ReminderItem.fetchRequest())
+            tableView.reloadData()
+        } catch {
+            print("Fetching Failed")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,8 +56,13 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
         // Dispose of any resources that can be recreated.
     }
     
+    func setToDefault(){
+        //not implemented
+    }
+    
     func datePickerChanged(date: Date) {
         self.delegateDP?.datePickerChanged(date: date)
+        tempReminderItem.notifDate = date as NSDate
     }
     
     func onOffNotifPrimaryActionTriggered(isNotifOn: Bool) {
@@ -41,18 +71,22 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
         tableView.endUpdates()
     }
     
-    func reminderTextPrimaryActionTriggered() {
+    func endInsertMode(){
         self.view.endEditing(true);
         self.hideAddBarButton(hide: true)
         self.hideDatePickerRow = true
         self.delegateNR?.reminderTextPrimaryActionTriggered()
         tableView.beginUpdates()
         tableView.endUpdates()
-
+    }
+    
+    func reminderTextPrimaryActionTriggered() {
+       self.endInsertMode()
     }
 
-    func reminderTextEditingChanged(hasText:Bool) {
-         self.addBarButton.isEnabled = hasText
+    func reminderTextEditingChanged(text:String) {
+        self.addBarButton.isEnabled = text != "" ? true: false
+        self.tempReminderItem.text = text
     }
     
     func reminderTextEditingDidBegin() {
@@ -63,13 +97,6 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
-//    @IBAction func addReminderAction(_ sender: Any) {
-//        self.endEditMode()
-//        print("Add")
-//    }
-//
-
     
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //
@@ -82,7 +109,21 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
 //    }
     
     @IBAction func addReminderItem(_ sender: Any) {
-        print(self.newReminderItem)
+        //self.newReminderItem
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let reminderItem = ReminderItem(context:context)
+        reminderItem.completed = false
+        reminderItem.notifDate = self.tempReminderItem.notifDate
+        reminderItem.text = self.tempReminderItem.text
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        self.tempReminderItem = TempReminderItem()
+        
+        //end insert mode
+        self.endInsertMode()
+        //set to default state in NewReminderTableCell
+        self.delegateDP?.setToDefault()
+        self.getData()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{

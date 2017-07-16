@@ -10,19 +10,17 @@ import Foundation
 
 class ReminderItem{
    
-    var text: String
+    var text: String?
     var notifDate: Date?
     var completed: Bool
+    
+    public init(){
+        self.completed = false
+    }
     
     public init(text: String){
         self.text = text
         self.completed = false
-    }
-    
-    public init(text:String,notifDate:Date){
-        self.text = text
-        self.completed = false
-        self.notifDate = notifDate
     }
     
     func setCompleted(completed:Bool){

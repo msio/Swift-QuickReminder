@@ -13,7 +13,7 @@ protocol NewReminderTableCellProtocol:class {
     func reminderTextEditingDidBegin()
     func reminderTextPrimaryActionTriggered()
     func onOffNotifPrimaryActionTriggered(isNotifOn:Bool)
-    func reminderTextEditingChanged(hasText:Bool)
+    func reminderTextEditingChanged(text:String)
 }
 
 class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
@@ -35,6 +35,10 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         self.cellAlreadyDidLoad = true;
     }
     
+    func setToDefault(){
+        endInsertMode()
+    }
+    
     func datePickerChanged(date: Date) {
         self.setDateLabel(date: date)
     }
@@ -54,8 +58,9 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         }
     }
     
+
     @IBAction func reminderTextEditingChanged(_ sender: Any) {
-        self.delegate?.reminderTextEditingChanged(hasText: self.reminderTextInput.hasText)
+        self.delegate?.reminderTextEditingChanged(text: self.reminderTextInput.text!)
     }
     
     @IBAction func reminderTextEditingDidBegin(_ sender: Any) {
@@ -64,7 +69,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         self.onOffNotifButton.isHidden = false;
     }
     
-    @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
+    private func endInsertMode(){
         self.reminderTextInput.text = ""
         self.dateLabel.isHidden = true
         self.onOffNotifButton.isHidden = true
@@ -72,6 +77,10 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
         let currentDate = Date()
         self.setDateLabel(date: currentDate)
+    }
+    
+    @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
+        self.endInsertMode()
         delegate?.reminderTextPrimaryActionTriggered()
     }
     

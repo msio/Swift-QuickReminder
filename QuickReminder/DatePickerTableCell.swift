@@ -11,6 +11,7 @@ import UIKit
 
 protocol DatePickerTableCellProtocol:class {
     func datePickerChanged(date:Date)
+    func setToDefault()
 }
 
 class DatePickerTableCell: UITableViewCell,NewReminderTableCellProtocol{
@@ -42,7 +43,7 @@ class DatePickerTableCell: UITableViewCell,NewReminderTableCellProtocol{
         //not implemented
     }
     
-    func reminderTextEditingChanged(hasText: Bool) {
+    func reminderTextEditingChanged(text: String) {
         //not implemented
     }
     
