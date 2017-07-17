@@ -45,6 +45,7 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
     func getData(){
         do {
             items = try context.fetch(ReminderItem.fetchRequest())
+            items = items.reversed()
             tableView.reloadData()
         } catch {
             print("Fetching Failed")
@@ -145,11 +146,11 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
             }
             return cell
         }
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reminderCellItem", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reminderItemCell", for: indexPath) as! ReminderItemTableCell
         
             let item = items[indexPath.row - 2]
-            cell.textLabel?.text = item.text
+            cell.label?.text = item.text
         
         return cell
         

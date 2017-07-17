@@ -11,6 +11,8 @@
 		6901E5FB1F1BB40000F1C7AA /* NewReminderTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6901E5FA1F1BB40000F1C7AA /* NewReminderTableCell.swift */; };
 		6901E5FD1F1BB4AB00F1C7AA /* DatePickerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6901E5FC1F1BB4AB00F1C7AA /* DatePickerTableCell.swift */; };
 		6901E6001F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6901E5FE1F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld */; };
+		6908FEF01F1CAC8E00E8A415 /* ReminderItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6908FEEF1F1CAC8E00E8A415 /* ReminderItemTableCell.swift */; };
+		6908FEF21F1CB60300E8A415 /* NotCompletedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */; };
 		6940A9A71F128BD4000DDB69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940A9A61F128BD4000DDB69 /* AppDelegate.swift */; };
 		6940A9A91F128BD4000DDB69 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940A9A81F128BD4000DDB69 /* TableViewController.swift */; };
 		6940A9AC1F128BD4000DDB69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6940A9AA1F128BD4000DDB69 /* Main.storyboard */; };
@@ -42,6 +44,8 @@
 		6901E5FA1F1BB40000F1C7AA /* NewReminderTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReminderTableCell.swift; sourceTree = "<group>"; };
 		6901E5FC1F1BB4AB00F1C7AA /* DatePickerTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerTableCell.swift; sourceTree = "<group>"; };
 		6901E5FF1F1BBA3D00F1C7AA /* QuickReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuickReminder.xcdatamodel; sourceTree = "<group>"; };
+		6908FEEF1F1CAC8E00E8A415 /* ReminderItemTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderItemTableCell.swift; sourceTree = "<group>"; };
+		6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotCompletedButton.swift; sourceTree = "<group>"; };
 		6940A9A31F128BD4000DDB69 /* QuickReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6940A9A61F128BD4000DDB69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6940A9A81F128BD4000DDB69 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 		6940A99A1F128BD4000DDB69 = {
 			isa = PBXGroup;
 			children = (
+				6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */,
 				6940A9A51F128BD4000DDB69 /* QuickReminder */,
 				6940A9BA1F128BD4000DDB69 /* QuickReminderTests */,
 				6940A9C51F128BD4000DDB69 /* QuickReminderUITests */,
@@ -119,6 +124,7 @@
 				6901E5FA1F1BB40000F1C7AA /* NewReminderTableCell.swift */,
 				6901E5FC1F1BB4AB00F1C7AA /* DatePickerTableCell.swift */,
 				6901E5FE1F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld */,
+				6908FEEF1F1CAC8E00E8A415 /* ReminderItemTableCell.swift */,
 			);
 			path = QuickReminder;
 			sourceTree = "<group>";
@@ -229,6 +235,7 @@
 				TargetAttributes = {
 					6940A9A21F128BD4000DDB69 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = X2DH768V99;
 						ProvisioningStyle = Automatic;
 					};
 					6940A9B61F128BD4000DDB69 = {
@@ -350,6 +357,8 @@
 				6901E5FD1F1BB4AB00F1C7AA /* DatePickerTableCell.swift in Sources */,
 				6940A9A71F128BD4000DDB69 /* AppDelegate.swift in Sources */,
 				6901E6001F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld in Sources */,
+				6908FEF01F1CAC8E00E8A415 /* ReminderItemTableCell.swift in Sources */,
+				6908FEF21F1CB60300E8A415 /* NotCompletedButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +511,7 @@
 			baseConfigurationReference = D12958B324BF6C5501AA8F9E /* Pods-QuickReminder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X2DH768V99;
 				INFOPLIST_FILE = QuickReminder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.ios.QuickReminder;
@@ -516,7 +525,7 @@
 			baseConfigurationReference = 29CEF814BEEC6D59157629BE /* Pods-QuickReminder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X2DH768V99;
 				INFOPLIST_FILE = QuickReminder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.ios.QuickReminder;
