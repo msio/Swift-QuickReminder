@@ -22,6 +22,7 @@ class TempReminderItem{
 class TableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var items:[ReminderItem] = []
@@ -35,7 +36,7 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideAddBarButton(hide: true)
+        //self.hideAddBarButton(hide: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,22 +110,28 @@ class TableViewController: UITableViewController,NewReminderTableCellProtocol,Da
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
     
+    private func addReminderItem(){
+    //self.newReminderItem
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let reminderItem = ReminderItem(context:context)
+    reminderItem.completed = false
+    reminderItem.notifDate = self.tempReminderItem.notifDate
+    reminderItem.text = self.tempReminderItem.text
+    
+    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+    self.tempReminderItem = TempReminderItem()
+    
+    //end insert mode
+    self.endInsertMode()
+    //set to default state in NewReminderTableCell
+    self.delegateDP?.setToDefault()
+    self.getData()
+
+    }
+    
     @IBAction func addReminderItem(_ sender: Any) {
-        //self.newReminderItem
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let reminderItem = ReminderItem(context:context)
-        reminderItem.completed = false
-        reminderItem.notifDate = self.tempReminderItem.notifDate
-        reminderItem.text = self.tempReminderItem.text
+        self.performSegue(withIdentifier: "seque", sender: nil)
         
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
-        self.tempReminderItem = TempReminderItem()
-        
-        //end insert mode
-        self.endInsertMode()
-        //set to default state in NewReminderTableCell
-        self.delegateDP?.setToDefault()
-        self.getData()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
