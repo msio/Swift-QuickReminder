@@ -22,7 +22,7 @@ class DatePickerTableCell: UITableViewCell,NewReminderTableCellProtocol{
     weak var delegate:DatePickerTableCellProtocol?
     var cellAlreadyDidLoad:Bool = false
     
-    public func initCell(tableView:TableViewController){
+    public func initCell(tableView:NCTableViewController){
         tableView.delegateNR = self
         self.cellAlreadyDidLoad = true;
     }

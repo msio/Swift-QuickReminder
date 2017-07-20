@@ -12,7 +12,7 @@
         <!--Table View Controller-->
         <scene sceneID="8JJ-Gf-eFS">
             <objects>
-                <tableViewController id="HOx-kE-hlX" customClass="TableViewController" customModule="QuickReminder" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="HOx-kE-hlX" customClass="NCTableViewController" customModule="QuickReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="87Q-gk-IeW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -128,12 +128,12 @@
                         <barButtonItem key="rightBarButtonItem" title="Add" id="aqo-Ka-iPI">
                             <connections>
                                 <action selector="addReminderItem:" destination="HOx-kE-hlX" id="9Bm-YD-1XH"/>
-                                <segue destination="Vtx-AQ-EHl" kind="showDetail" identifier="seque" animates="NO" id="94i-TM-RWS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButton" destination="aqo-Ka-iPI" id="xDE-17-foC"/>
+                        <segue destination="du8-5X-ceb" kind="showDetail" identifier="seque" animates="NO" id="vx6-Vi-O3g"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKh-SU-1As" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -153,10 +153,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="uEM-U7-uIk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WN5-KM-buF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2394" y="126"/>
+            <point key="canvasLocation" x="3390" y="125.70422535211267"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NfB-jC-yDw">
@@ -175,6 +176,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KVe-lB-r9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517.5" y="143.66197183098592"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="izA-J6-p8m">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="du8-5X-ceb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NK2-Ks-Asx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Vtx-AQ-EHl" kind="relationship" relationship="rootViewController" id="kLS-lN-ZdH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VL3-OZ-Shj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2392.5" y="125.70422535211267"/>
         </scene>
     </scenes>
 </document>

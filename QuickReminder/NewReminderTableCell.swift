@@ -28,7 +28,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     
     private var isNotifOn: Bool = true
     
-    public func initCell(tableView:TableViewController){
+    public func initCell(tableView:NCTableViewController){
         tableView.delegateDP = self
         self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)

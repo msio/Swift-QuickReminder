@@ -19,7 +19,7 @@ class TempReminderItem{
 
 }
 
-class TableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
+class NCTableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
