@@ -9,7 +9,7 @@
 import UIKit
 
 enum RightBarButton {
-    case add, completed
+    case cancel, completed
 }
 
 class TempReminderItem {
@@ -27,18 +27,18 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
 
-    
+
     var items: [ReminderItem] = []
-    
+
     private var hideDatePickerRow: Bool = true
 
     weak var delegateDP: DatePickerTableCellProtocol?
     weak var delegateNR: NewReminderTableCellProtocol?
-    
+
     var tempReminderItem = TempReminderItem()
     var dataManager = DataManager()
-    var rightBarButtonType:RightBarButton!
-    
+    var rightBarButtonType: RightBarButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -83,16 +83,19 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     }
 
     func reminderTextPrimaryActionTriggered() {
-        self.endInsertMode()
+            self.dataManager.save(temp: self.tempReminderItem)
+            self.tempReminderItem = TempReminderItem()
+            //end insert mode
+            self.endInsertMode()
+            self.loadData()
     }
 
     func reminderTextEditingChanged(text: String) {
-        self.rightBarButton.isEnabled = text != "" ? true : false
         self.tempReminderItem.text = text
     }
 
     func reminderTextEditingDidBegin() {
-        self.sentRightBarButton(type: RightBarButton.add)
+        self.sentRightBarButton(type: RightBarButton.cancel)
         self.hideDatePickerRow = false
         tableView.beginUpdates()
         tableView.endUpdates()
@@ -109,18 +112,14 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 //    }
 
     @IBAction func sentRightBarButtonAction(_ sender: Any) {
-        if(self.rightBarButtonType == RightBarButton.add){
-            self.dataManager.save(temp: self.tempReminderItem)
-            self.tempReminderItem = TempReminderItem()
-            //end insert mode
+        if(self.rightBarButtonType == RightBarButton.cancel) {
             self.endInsertMode()
             //set to default state in NewReminderTableCell
             self.delegateDP?.setToDefault()
-            self.loadData()
-        }else{
+        } else {
             self.performSegue(withIdentifier: "toCompleted", sender: nil)
         }
-        
+
 
     }
 
@@ -147,7 +146,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-        cell.completedButton.completed = false
+        cell.completedButton.completed = item.completed
         return cell
 
     }
@@ -169,16 +168,14 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         return items.count + 2
     }
 
-    private func sentRightBarButton(type:RightBarButton) {
+    private func sentRightBarButton(type: RightBarButton) {
         self.rightBarButtonType = type
         if(type == RightBarButton.completed) {
             self.rightBarButton.title = nil
-            self.rightBarButton.isEnabled = true
             self.rightBarButton.image = #imageLiteral(resourceName: "completed")
         } else {
             self.rightBarButton.image = nil
-            self.rightBarButton.isEnabled = false
-            self.rightBarButton.title = "Add"
+            self.rightBarButton.title = "Cancel"
         }
     }
 

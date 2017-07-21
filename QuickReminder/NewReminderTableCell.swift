@@ -30,6 +30,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     
     public func initCell(tableView:NCTableViewController){
         tableView.delegateDP = self
+        self.reminderTextInput.returnKeyType = .done
         self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
         self.cellAlreadyDidLoad = true;
@@ -80,8 +81,10 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     }
     
     @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
-        self.endInsertMode()
-        delegate?.reminderTextPrimaryActionTriggered()
+        if(self.reminderTextInput.hasText){
+         delegate?.reminderTextPrimaryActionTriggered()
+         self.endInsertMode()
+        }
     }
     
     

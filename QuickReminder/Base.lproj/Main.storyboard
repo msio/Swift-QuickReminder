@@ -100,9 +100,9 @@
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zcg-Ar-Krw" customClass="NotCompletedButton" customModule="QuickReminder" customModuleProvider="target">
                                             <rect key="frame" x="13" y="6" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="completed" value="YES"/>
-                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="completedPrimaryActionTriggered:" destination="Z8q-tP-cYa" eventType="primaryActionTriggered" id="aVv-z4-jCd"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lf7-3t-FDL">
                                             <rect key="frame" x="57" y="11" width="42" height="21"/>
