@@ -13,4 +13,5 @@ import UIKit
 class ReminderItemTableCell : UITableViewCell{
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var completedButton: NotCompletedButton!
 }

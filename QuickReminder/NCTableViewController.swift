@@ -37,6 +37,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     
     var tempReminderItem = TempReminderItem()
     var dataManager = DataManager()
+    var rightBarButtonType:RightBarButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +45,10 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
     override func viewWillAppear(_ animated: Bool) {
         self.sentRightBarButton(type: RightBarButton.completed)
-        self.getData()
+        self.loadData()
     }
 
-    func getData() {
+    func loadData() {
         self.items = self.dataManager.load(completed: false)
         tableView.reloadData()
     }
@@ -107,27 +108,19 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
 
-    private func addReminderItem() {
-        //self.newReminderItem
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let reminderItem = ReminderItem(context: context)
-        reminderItem.completed = false
-        reminderItem.notifDate = self.tempReminderItem.notifDate
-        reminderItem.text = self.tempReminderItem.text
-
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
-        self.tempReminderItem = TempReminderItem()
-
-        //end insert mode
-        self.endInsertMode()
-        //set to default state in NewReminderTableCell
-        self.delegateDP?.setToDefault()
-        self.getData()
-
-    }
-
     @IBAction func sentRightBarButtonAction(_ sender: Any) {
-        self.performSegue(withIdentifier: "seque", sender: nil)
+        if(self.rightBarButtonType == RightBarButton.add){
+            self.dataManager.save(temp: self.tempReminderItem)
+            self.tempReminderItem = TempReminderItem()
+            //end insert mode
+            self.endInsertMode()
+            //set to default state in NewReminderTableCell
+            self.delegateDP?.setToDefault()
+            self.loadData()
+        }else{
+            self.performSegue(withIdentifier: "toCompleted", sender: nil)
+        }
+        
 
     }
 
@@ -154,7 +147,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-
+        cell.completedButton.completed = false
         return cell
 
     }
@@ -177,6 +170,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     }
 
     private func sentRightBarButton(type:RightBarButton) {
+        self.rightBarButtonType = type
         if(type == RightBarButton.completed) {
             self.rightBarButton.title = nil
             self.rightBarButton.isEnabled = true

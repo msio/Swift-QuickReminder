@@ -11,4 +11,7 @@ import UIKit
 
 class CTableViewController: UITableViewController{
     
+    @IBAction func sentRightBarButtonAction(_ sender: Any) {
+        self.performSegue(withIdentifier: "toNotCompleted", sender: nil)
+    }
 }

@@ -114,6 +114,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="completedButton" destination="zcg-Ar-Krw" id="6Mx-Pq-y8b"/>
                                     <outlet property="label" destination="Lf7-3t-FDL" id="JdJ-nn-K9S"/>
                                 </connections>
                             </tableViewCell>
@@ -133,11 +134,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="rightBarButton" destination="aqo-Ka-iPI" id="HdW-tT-gNU"/>
+                        <segue destination="Y2z-QP-nuQ" kind="showDetail" identifier="toCompleted" animates="NO" id="eoC-ex-qd6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKh-SU-1As" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1538" y="126"/>
+            <point key="canvasLocation" x="1211" y="144"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="7GV-DY-qCX">
@@ -162,11 +164,20 @@
                             <outlet property="delegate" destination="ww2-ng-tmp" id="6Nt-Bi-C5s"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ej7-C2-VWl"/>
+                    <navigationItem key="navigationItem" id="ej7-C2-VWl">
+                        <barButtonItem key="rightBarButtonItem" image="notCompleted" id="G3e-sq-lpN">
+                            <connections>
+                                <action selector="sentRightBarButtonAction:" destination="ww2-ng-tmp" id="5zO-ox-bco"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="OJ5-Yf-K4O" kind="showDetail" identifier="toNotCompleted" animates="NO" id="vz8-Fa-bVy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qrh-sP-SJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3360" y="132.04225352112675"/>
+            <point key="canvasLocation" x="2809" y="144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NfB-jC-yDw">
@@ -187,22 +198,25 @@
             <point key="canvasLocation" x="517.5" y="143.66197183098592"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="ETK-1Z-dxN">
+        <scene sceneID="dGf-OC-MHD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hlO-o2-sZT" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y2z-QP-nuQ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f4v-9r-0ON">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TCO-xz-B2K">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ww2-ng-tmp" kind="relationship" relationship="rootViewController" id="4PO-u8-FQl"/>
+                        <segue destination="ww2-ng-tmp" kind="relationship" relationship="rootViewController" id="r83-PJ-fhi"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xRJ-4y-Xpq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R6f-Jd-eAP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2362.5" y="132.04225352112675"/>
+            <point key="canvasLocation" x="2121" y="144"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="notCompleted" width="25" height="25"/>
+    </resources>
 </document>

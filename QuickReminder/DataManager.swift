@@ -23,4 +23,13 @@ class DataManager {
         }
         return items
     }
+    
+    func save(temp: TempReminderItem){
+        let item = ReminderItem(context:context)
+        item.completed = temp.completed
+        item.notifDate = temp.notifDate
+        item.text = temp.text
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+
+    }
 }
