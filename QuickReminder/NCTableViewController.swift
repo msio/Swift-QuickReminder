@@ -27,17 +27,17 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
 
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+    
     var items: [ReminderItem] = []
-
+    
     private var hideDatePickerRow: Bool = true
 
     weak var delegateDP: DatePickerTableCellProtocol?
     weak var delegateNR: NewReminderTableCellProtocol?
-
+    
     var tempReminderItem = TempReminderItem()
-
+    var dataManager = DataManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -48,13 +48,8 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     }
 
     func getData() {
-        do {
-            items = try context.fetch(ReminderItem.fetchRequest())
-            items = items.reversed()
-            tableView.reloadData()
-        } catch {
-            print("Fetching Failed")
-        }
+        self.items = self.dataManager.load(completed: false)
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
