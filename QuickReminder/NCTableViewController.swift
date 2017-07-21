@@ -8,42 +8,46 @@
 
 import UIKit
 
-class TempReminderItem{
-    var completed:Bool
-    var text:String?
-    var notifDate:NSDate?
-    
-    init(){
+enum RightBarButton {
+    case add, completed
+}
+
+class TempReminderItem {
+    var completed: Bool
+    var text: String?
+    var notifDate: NSDate?
+
+    init() {
         self.completed = false
     }
 
 }
 
-class NCTableViewController: UITableViewController,NewReminderTableCellProtocol,DatePickerTableCellProtocol {
-    
-    @IBOutlet weak var addBarButton: UIBarButtonItem!
-    
+class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol {
+
+    @IBOutlet weak var rightBarButton: UIBarButtonItem!
+
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    var items:[ReminderItem] = []
-    
-    private var hideDatePickerRow:Bool = true;
-    
-    weak var delegateDP:DatePickerTableCellProtocol?
+
+    var items: [ReminderItem] = []
+
+    private var hideDatePickerRow: Bool = true
+
+    weak var delegateDP: DatePickerTableCellProtocol?
     weak var delegateNR: NewReminderTableCellProtocol?
-    
+
     var tempReminderItem = TempReminderItem()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.hideAddBarButton(hide: true)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
+        self.sentRightBarButton(type: RightBarButton.completed)
         self.getData()
     }
-    
-    func getData(){
+
+    func getData() {
         do {
             items = try context.fetch(ReminderItem.fetchRequest())
             items = items.reversed()
@@ -52,54 +56,52 @@ class NCTableViewController: UITableViewController,NewReminderTableCellProtocol,
             print("Fetching Failed")
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func setToDefault(){
+
+    func setToDefault() {
         //not implemented
     }
-    
+
     func datePickerChanged(date: Date) {
         self.delegateDP?.datePickerChanged(date: date)
         tempReminderItem.notifDate = date as NSDate
     }
-    
+
     func onOffNotifPrimaryActionTriggered(isNotifOn: Bool) {
         self.hideDatePickerRow = isNotifOn
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
-    func endInsertMode(){
-        self.view.endEditing(true);
-        self.hideAddBarButton(hide: true)
+
+    func endInsertMode() {
+        self.view.endEditing(true)
+        self.sentRightBarButton(type: RightBarButton.completed)
         self.hideDatePickerRow = true
         self.delegateNR?.reminderTextPrimaryActionTriggered()
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
+
     func reminderTextPrimaryActionTriggered() {
-       self.endInsertMode()
+        self.endInsertMode()
     }
 
-    func reminderTextEditingChanged(text:String) {
-        self.addBarButton.isEnabled = text != "" ? true: false
+    func reminderTextEditingChanged(text: String) {
+        self.rightBarButton.isEnabled = text != "" ? true : false
         self.tempReminderItem.text = text
     }
-    
+
     func reminderTextEditingDidBegin() {
-        self.hideAddBarButton(hide: false)
-        //set only not clickable
-        self.addBarButton.isEnabled = false
+        self.sentRightBarButton(type: RightBarButton.add)
         self.hideDatePickerRow = false
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
+
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //
 //        if indexPath.row == 0 {
@@ -109,84 +111,85 @@ class NCTableViewController: UITableViewController,NewReminderTableCellProtocol,
 //
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
-    
-    private func addReminderItem(){
-    //self.newReminderItem
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let reminderItem = ReminderItem(context:context)
-    reminderItem.completed = false
-    reminderItem.notifDate = self.tempReminderItem.notifDate
-    reminderItem.text = self.tempReminderItem.text
-    
-    (UIApplication.shared.delegate as! AppDelegate).saveContext()
-    self.tempReminderItem = TempReminderItem()
-    
-    //end insert mode
-    self.endInsertMode()
-    //set to default state in NewReminderTableCell
-    self.delegateDP?.setToDefault()
-    self.getData()
+
+    private func addReminderItem() {
+        //self.newReminderItem
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let reminderItem = ReminderItem(context: context)
+        reminderItem.completed = false
+        reminderItem.notifDate = self.tempReminderItem.notifDate
+        reminderItem.text = self.tempReminderItem.text
+
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        self.tempReminderItem = TempReminderItem()
+
+        //end insert mode
+        self.endInsertMode()
+        //set to default state in NewReminderTableCell
+        self.delegateDP?.setToDefault()
+        self.getData()
 
     }
-    
-    @IBAction func addReminderItem(_ sender: Any) {
+
+    @IBAction func sentRightBarButtonAction(_ sender: Any) {
         self.performSegue(withIdentifier: "seque", sender: nil)
-        
+
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-    
-        if(indexPath.row == 0){
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if(indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "newReminderCell", for: indexPath) as! NewReminderTableCell
             cell.delegate = self
-            if(!cell.cellAlreadyDidLoad){
-                cell.initCell(tableView:self)
+            if(!cell.cellAlreadyDidLoad) {
+                cell.initCell(tableView: self)
+            }
+            return cell
+        }
+        if(indexPath.row == 1) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerTableCell
+            cell.delegate = self
+            if(!cell.cellAlreadyDidLoad) {
+                cell.initCell(tableView: self)
             }
             return cell
         }
 
-        if(indexPath.row == 1){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerTableCell
-            cell.delegate = self
-            if(!cell.cellAlreadyDidLoad){
-                cell.initCell(tableView:self)
-            }
-            return cell
-        }
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "reminderItemCell", for: indexPath) as! ReminderItemTableCell
-        
-            let item = items[indexPath.row - 2]
-            cell.label?.text = item.text
-        
+
+        let item = items[indexPath.row - 2]
+        cell.label?.text = item.text
+
         return cell
-        
+
     }
-    
-    
-    override func tableView(_ tableView:UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if self.hideDatePickerRow && indexPath.row == 1 {
             return 0
         }
-        else if(!self.hideDatePickerRow && indexPath.row == 1){
-            return 218
+            else if(!self.hideDatePickerRow && indexPath.row == 1) {
+                return 218
         }
-        
+
         return super.tableView(tableView, heightForRowAt: indexPath)
-        
+
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count + 2
     }
-    
-    private func hideAddBarButton(hide:Bool){
-        if(hide){
-            self.addBarButton.isEnabled = false;
-            self.addBarButton.tintColor = UIColor.clear
-        }else{
-            self.addBarButton.isEnabled = true;
-            self.addBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+
+    private func sentRightBarButton(type:RightBarButton) {
+        if(type == RightBarButton.completed) {
+            self.rightBarButton.title = nil
+            self.rightBarButton.isEnabled = true
+            self.rightBarButton.image = #imageLiteral(resourceName: "completed")
+        } else {
+            self.rightBarButton.image = nil
+            self.rightBarButton.isEnabled = false
+            self.rightBarButton.title = "Add"
         }
     }
 
