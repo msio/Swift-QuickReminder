@@ -9,16 +9,19 @@
 import Foundation
 import UIKit
 
+protocol ReminderItemTableCellProtocol {
+    func completedPrimaryActionTriggered(index: Int, button: NotCompletedButton)
+}
 
-class ReminderItemTableCell : UITableViewCell{
-    
+class ReminderItemTableCell: UITableViewCell {
+
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var completedButton: NotCompletedButton!
-    
-    
+
+    var delegate: ReminderItemTableCellProtocol!
+    var index: Int!
+
     @IBAction func completedPrimaryActionTriggered(_ sender: Any) {
-        self.completedButton.completed = !self.completedButton.completed
-        print(self.completedButton.completed.description)
-        self.setNeedsDisplay()
+        self.delegate.completedPrimaryActionTriggered(index: self.index,button: self.completedButton)
     }
 }

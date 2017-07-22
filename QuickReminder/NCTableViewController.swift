@@ -23,7 +23,7 @@ class TempReminderItem {
 
 }
 
-class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol {
+class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol,ReminderItemTableCellProtocol {
 
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
 
@@ -82,6 +82,17 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         tableView.endUpdates()
     }
 
+    func completedPrimaryActionTriggered(index: Int,button: NotCompletedButton) {
+        if(self.rightBarButtonType == RightBarButton.completed){
+            button.completed = true
+            button.setNeedsDisplay()
+            //self.items.remove(at: index)
+            tableView.reloadData()
+        }
+       
+    }
+
+    
     func reminderTextPrimaryActionTriggered() {
             self.dataManager.save(temp: self.tempReminderItem)
             self.tempReminderItem = TempReminderItem()
@@ -93,6 +104,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     func reminderTextEditingChanged(text: String) {
         self.tempReminderItem.text = text
     }
+
 
     func reminderTextEditingDidBegin() {
         self.sentRightBarButton(type: RightBarButton.cancel)
@@ -146,12 +158,17 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-        cell.completedButton.completed = item.completed
+        cell.index = indexPath.row - 2
+        cell.delegate = self
         return cell
 
     }
 
-
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+//    {
+//        print(indexPath)
+//    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if self.hideDatePickerRow && indexPath.row == 1 {
             return 0
