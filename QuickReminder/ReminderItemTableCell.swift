@@ -8,9 +8,10 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 protocol ReminderItemTableCellProtocol {
-    func completedPrimaryActionTriggered(index: Int, button: NotCompletedButton)
+    func completedPrimaryActionTriggered(objectId: NSManagedObjectID,indexPath: IndexPath, button: NotCompletedButton)
 }
 
 class ReminderItemTableCell: UITableViewCell {
@@ -19,9 +20,10 @@ class ReminderItemTableCell: UITableViewCell {
     @IBOutlet weak var completedButton: NotCompletedButton!
 
     var delegate: ReminderItemTableCellProtocol!
-    var index: Int!
+    var indexPath: IndexPath!
+    var objectId: NSManagedObjectID!
 
     @IBAction func completedPrimaryActionTriggered(_ sender: Any) {
-        self.delegate.completedPrimaryActionTriggered(index: self.index,button: self.completedButton)
+        self.delegate.completedPrimaryActionTriggered(objectId: self.objectId,indexPath: self.indexPath,button: self.completedButton)
     }
 }

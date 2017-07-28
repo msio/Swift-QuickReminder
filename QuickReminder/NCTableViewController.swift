@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum RightBarButton {
     case cancel, completed
@@ -15,15 +16,14 @@ enum RightBarButton {
 class TempReminderItem {
     var completed: Bool
     var text: String?
-    var notifDate: NSDate?
+    var notifDate: Date?
 
     init() {
         self.completed = false
     }
-
 }
 
-class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol,ReminderItemTableCellProtocol {
+class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol, ReminderItemTableCellProtocol {
 
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
 
@@ -64,7 +64,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
     func datePickerChanged(date: Date) {
         self.delegateDP?.datePickerChanged(date: date)
-        tempReminderItem.notifDate = date as NSDate
+        tempReminderItem.notifDate = date
     }
 
     func onOffNotifPrimaryActionTriggered(isNotifOn: Bool) {
@@ -82,23 +82,26 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         tableView.endUpdates()
     }
 
-    func completedPrimaryActionTriggered(index: Int,button: NotCompletedButton) {
-        if(self.rightBarButtonType == RightBarButton.completed){
+    func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath, button: NotCompletedButton) {
+        if(self.rightBarButtonType == RightBarButton.completed) {
+            self.dataManager.setIsCompleted(completed: true, objectId: objectId)
+            self.items.remove(at: indexPath.row - 2)
             button.completed = true
             button.setNeedsDisplay()
-            //self.items.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.right)
             tableView.reloadData()
+        
         }
-       
+
     }
 
-    
+
     func reminderTextPrimaryActionTriggered() {
-            self.dataManager.save(temp: self.tempReminderItem)
-            self.tempReminderItem = TempReminderItem()
-            //end insert mode
-            self.endInsertMode()
-            self.loadData()
+        self.dataManager.save(temp: self.tempReminderItem)
+        self.tempReminderItem = TempReminderItem()
+        //end insert mode
+        self.endInsertMode()
+        self.loadData()
     }
 
     func reminderTextEditingChanged(text: String) {
@@ -158,7 +161,8 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-        cell.index = indexPath.row - 2
+        cell.indexPath = indexPath
+        cell.objectId = item.objectID
         cell.delegate = self
         return cell
 
@@ -168,7 +172,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 //    {
 //        print(indexPath)
 //    }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if self.hideDatePickerRow && indexPath.row == 1 {
             return 0
@@ -184,6 +188,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count + 2
     }
+
 
     private func sentRightBarButton(type: RightBarButton) {
         self.rightBarButtonType = type
