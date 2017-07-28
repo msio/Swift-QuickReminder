@@ -37,7 +37,7 @@ class DataManager {
     func setIsCompleted(completed: Bool, objectId: NSManagedObjectID) {
         do {
             let item = context.object(with: objectId) as! ReminderItem
-            item.setValue(true, forKey: "completed")
+            item.setValue(completed, forKey: "completed")
             try context.save()
         } catch let error {
             print(error)
