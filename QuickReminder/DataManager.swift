@@ -28,10 +28,13 @@ class DataManager {
     func save(temp: TempReminderItem) {
         let item = ReminderItem(context: context)
         item.completed = temp.completed
-        //item.notifDate = temp.notifDate
+        item.notifDate = temp.notifDate as NSDate?
         item.text = temp.text
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
-
+        do {
+            try context.save()
+        } catch {
+            print("Saving Failed")
+        }
     }
 
     func setIsCompleted(completed: Bool, objectId: NSManagedObjectID) {

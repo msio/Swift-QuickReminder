@@ -83,16 +83,12 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     }
 
     func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath, button: NotCompletedButton) {
-        if(self.rightBarButtonType == RightBarButton.completed) {
-            self.dataManager.setIsCompleted(completed: true, objectId: objectId)
-            self.items.remove(at: indexPath.row - 2)
-            button.completed = true
-            button.setNeedsDisplay()
-            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.right)
-            tableView.reloadData()
-        
-        }
-
+        self.dataManager.setIsCompleted(completed: true, objectId: objectId)
+        self.items.remove(at: indexPath.row - 2)
+        button.completed = true
+        button.setNeedsDisplay()
+        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.right)
+        tableView.reloadData()
     }
 
 

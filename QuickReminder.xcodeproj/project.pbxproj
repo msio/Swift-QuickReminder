@@ -13,6 +13,7 @@
 		6901E6001F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6901E5FE1F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld */; };
 		6908FEF01F1CAC8E00E8A415 /* ReminderItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6908FEEF1F1CAC8E00E8A415 /* ReminderItemTableCell.swift */; };
 		6908FEF21F1CB60300E8A415 /* NotCompletedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */; };
+		691FC3A31F2C984C0020B156 /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691FC3A21F2C984C0020B156 /* PlusButton.swift */; };
 		6940A9A71F128BD4000DDB69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940A9A61F128BD4000DDB69 /* AppDelegate.swift */; };
 		6940A9A91F128BD4000DDB69 /* NCTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940A9A81F128BD4000DDB69 /* NCTableViewController.swift */; };
 		6940A9AC1F128BD4000DDB69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6940A9AA1F128BD4000DDB69 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		6901E5FF1F1BBA3D00F1C7AA /* QuickReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuickReminder.xcdatamodel; sourceTree = "<group>"; };
 		6908FEEF1F1CAC8E00E8A415 /* ReminderItemTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderItemTableCell.swift; sourceTree = "<group>"; };
 		6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotCompletedButton.swift; sourceTree = "<group>"; };
+		691FC3A21F2C984C0020B156 /* PlusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		6940A9A31F128BD4000DDB69 /* QuickReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6940A9A61F128BD4000DDB69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6940A9A81F128BD4000DDB69 /* NCTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCTableViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		6940A99A1F128BD4000DDB69 = {
 			isa = PBXGroup;
 			children = (
+				691FC3A21F2C984C0020B156 /* PlusButton.swift */,
 				6908FEF11F1CB60300E8A415 /* NotCompletedButton.swift */,
 				6940A9A51F128BD4000DDB69 /* QuickReminder */,
 				6940A9BA1F128BD4000DDB69 /* QuickReminderTests */,
@@ -361,6 +364,7 @@
 				6940A9A91F128BD4000DDB69 /* NCTableViewController.swift in Sources */,
 				6901E5FB1F1BB40000F1C7AA /* NewReminderTableCell.swift in Sources */,
 				6901E5FD1F1BB4AB00F1C7AA /* DatePickerTableCell.swift in Sources */,
+				691FC3A31F2C984C0020B156 /* PlusButton.swift in Sources */,
 				6940A9A71F128BD4000DDB69 /* AppDelegate.swift in Sources */,
 				6901E6001F1BBA3D00F1C7AA /* QuickReminder.xcdatamodeld in Sources */,
 				6908FEF01F1CAC8E00E8A415 /* ReminderItemTableCell.swift in Sources */,
