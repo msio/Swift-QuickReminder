@@ -16,6 +16,7 @@ protocol ReminderItemTableCellProtocol {
 
 class ReminderItemTableCell: UITableViewCell {
 
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var completedButton: NotCompletedButton!
 

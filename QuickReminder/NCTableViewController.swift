@@ -38,7 +38,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     var tempReminderItem = TempReminderItem()
     var dataManager = DataManager()
     var rightBarButtonType: RightBarButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -157,6 +157,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
+        cell.label.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 46).isActive = true
         cell.indexPath = indexPath
         cell.objectId = item.objectID
         cell.delegate = self

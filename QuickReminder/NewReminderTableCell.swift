@@ -33,9 +33,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     
     public func initCell(tableView:NCTableViewController){
         tableView.delegateDP = self
-        let width = UIScreen.main.bounds.width - 90
-        print(width)
-        self.stackView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        self.stackView.widthAnchor.constraint(equalToConstant: self.bounds.width - 96 ).isActive = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOnOfButtonViewTap))
         self.onOfNotifButtonView.addGestureRecognizer(tapGesture)
         self.reminderTextInput.returnKeyType = .done
