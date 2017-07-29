@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,31 +20,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="newReminderCell" id="zcf-P3-vVG" customClass="NewReminderTableCell" customModule="QuickReminder" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="newReminderCell" rowHeight="44" id="zcf-P3-vVG" customClass="NewReminderTableCell" customModule="QuickReminder" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zcf-P3-vVG" id="VfK-Yx-hML">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alw-Z9-wbq">
-                                            <rect key="frame" x="278" y="9" width="34" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Time"/>
-                                            <connections>
-                                                <action selector="onOffNotifPrimaryActionTriggered:" destination="zcf-P3-vVG" eventType="primaryActionTriggered" id="TjX-Mw-pH0"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBL-H5-6hd" customClass="PlusButton" customModule="QuickReminder" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Rkg-ch-PSB">
-                                            <rect key="frame" x="52" y="8" width="101.5" height="31.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Rkg-ch-PSB">
+                                            <rect key="frame" x="37" y="7" width="101.5" height="33"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="new Reminder" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20f-HR-ESs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="101.5" height="18"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="new Reminder" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="20f-HR-ESs">
+                                                    <rect key="frame" x="0.0" y="0.0" width="101.5" height="33"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -53,27 +41,60 @@
                                                         <action selector="reminderTextPrimaryActionTriggered:" destination="zcf-P3-vVG" eventType="primaryActionTriggered" id="szK-u8-6Q9"/>
                                                     </connections>
                                                 </textField>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Today, 17:15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCt-mI-61p">
-                                                    <rect key="frame" x="0.0" y="18" width="101.5" height="13.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 17:15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCt-mI-61p">
+                                                    <rect key="frame" x="0.0" y="33" width="101.5" height="0.0"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="11"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </stackView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBL-H5-6hd" customClass="PlusButton" customModule="QuickReminder" customModuleProvider="target">
+                                            <rect key="frame" x="7" y="7" width="30" height="30"/>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q5w-Dc-XeK">
+                                            <rect key="frame" x="262" y="-1" width="50" height="44"/>
+                                            <subviews>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alw-Z9-wbq">
+                                                    <rect key="frame" x="9" y="7" width="34" height="30"/>
+                                                    <state key="normal" title="Time"/>
+                                                    <connections>
+                                                        <action selector="onOffNotifPrimaryActionTriggered:" destination="zcf-P3-vVG" eventType="primaryActionTriggered" id="RL3-sh-FHx"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="alw-Z9-wbq" firstAttribute="centerY" secondItem="q5w-Dc-XeK" secondAttribute="centerY" id="8kX-j8-71O"/>
+                                                <constraint firstItem="alw-Z9-wbq" firstAttribute="leading" secondItem="q5w-Dc-XeK" secondAttribute="leading" constant="9" id="KPG-Sl-p3a"/>
+                                                <constraint firstAttribute="trailing" secondItem="alw-Z9-wbq" secondAttribute="trailing" constant="7" id="WGc-bq-Hki"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="q5w-Dc-XeK" firstAttribute="centerY" secondItem="VfK-Yx-hML" secondAttribute="centerY" id="8DL-vY-0wV"/>
+                                        <constraint firstItem="q5w-Dc-XeK" firstAttribute="trailing" secondItem="VfK-Yx-hML" secondAttribute="trailingMargin" id="K7M-nU-rfn"/>
+                                        <constraint firstItem="MBL-H5-6hd" firstAttribute="centerY" secondItem="VfK-Yx-hML" secondAttribute="centerY" id="KWC-Xt-Iir"/>
+                                        <constraint firstItem="MBL-H5-6hd" firstAttribute="leading" secondItem="VfK-Yx-hML" secondAttribute="leadingMargin" constant="-1" id="R4d-ka-cDF"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Rkg-ch-PSB" secondAttribute="bottom" constant="-4.5" id="evz-Oc-6A3"/>
+                                        <constraint firstItem="q5w-Dc-XeK" firstAttribute="top" secondItem="VfK-Yx-hML" secondAttribute="topMargin" constant="-9" id="sGr-FM-yzo"/>
+                                        <constraint firstItem="MBL-H5-6hd" firstAttribute="top" secondItem="Rkg-ch-PSB" secondAttribute="top" id="ute-Dc-TFH"/>
+                                        <constraint firstItem="Rkg-ch-PSB" firstAttribute="leading" secondItem="MBL-H5-6hd" secondAttribute="trailing" id="y02-wh-PyL"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="YCt-mI-61p" id="ltU-QM-VW3"/>
+                                    <outlet property="onOfNotifButtonView" destination="q5w-Dc-XeK" id="LTH-Jg-Sbd"/>
                                     <outlet property="onOffNotifButton" destination="alw-Z9-wbq" id="zzG-Rb-8uh"/>
                                     <outlet property="reminderTextInput" destination="20f-HR-ESs" id="mNz-4H-VBU"/>
+                                    <outlet property="stackView" destination="Rkg-ch-PSB" id="hdM-JS-weH"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="datePickerCell" rowHeight="218" id="L2c-uI-sAx" customClass="DatePickerTableCell" customModule="QuickReminder" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="320" height="218"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L2c-uI-sAx" id="Jis-NV-pXY">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="217.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="gmc-dU-ACd">
@@ -98,7 +119,7 @@
                                 <rect key="frame" x="0.0" y="290" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z8q-tP-cYa" id="wj9-uf-Jfb">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qLZ-7Q-bcG">
@@ -169,7 +190,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="69w-Ea-fb5" id="9NT-T8-kpV">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiJ-Q8-dIG" customClass="NotCompletedButton" customModule="QuickReminder" customModuleProvider="target">

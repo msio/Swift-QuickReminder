@@ -18,6 +18,9 @@ protocol NewReminderTableCellProtocol:class {
 
 class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     
+    
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var onOfNotifButtonView: UIView!
     @IBOutlet weak var onOffNotifButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var reminderTextInput: UITextField!
@@ -30,10 +33,20 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     
     public func initCell(tableView:NCTableViewController){
         tableView.delegateDP = self
+        let width = UIScreen.main.bounds.width - 90
+        print(width)
+        self.stackView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOnOfButtonViewTap))
+        self.onOfNotifButtonView.addGestureRecognizer(tapGesture)
         self.reminderTextInput.returnKeyType = .done
         self.onOffNotifButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
         self.cellAlreadyDidLoad = true;
+    }
+    
+    
+    func handleOnOfButtonViewTap(){
+        self.toggleOnOffNotif()
     }
     
     func setToDefault(){
@@ -88,8 +101,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     }
     
     
-    
-    @IBAction func onOffNotifPrimaryActionTriggered(_ sender: Any) {
+    func toggleOnOffNotif(){
         if(self.isNotifOn){
             //set to off
             self.dateLabel.isHidden = true;
@@ -101,7 +113,11 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         }
         delegate?.onOffNotifPrimaryActionTriggered(isNotifOn: isNotifOn)
         self.isNotifOn  = !isNotifOn
-        
+
+    }
+    
+    @IBAction func onOffNotifPrimaryActionTriggered(_ sender: Any) {
+            self.toggleOnOffNotif()
     }
     
     
