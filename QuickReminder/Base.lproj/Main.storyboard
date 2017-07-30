@@ -99,10 +99,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="217.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="gmc-dU-ACd">
+                                        <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="gmc-dU-ACd">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                             <date key="date" timeIntervalSinceReferenceDate="521456987.95828003">
                                                 <!--2017-07-11 09:09:47 +0000-->
+                                            </date>
+                                            <date key="minimumDate" timeIntervalSinceReferenceDate="523101600">
+                                                <!--2017-07-30 10:00:00 +0000-->
                                             </date>
                                             <connections>
                                                 <action selector="datePickerPrimaryActionTriggered:" destination="L2c-uI-sAx" eventType="primaryActionTriggered" id="ldf-tI-03n"/>

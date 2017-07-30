@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 
 protocol ReminderItemTableCellProtocol {
-    func completedPrimaryActionTriggered(objectId: NSManagedObjectID,indexPath: IndexPath, button: NotCompletedButton)
+    func completedPrimaryActionTriggered(objectId: NSManagedObjectID,indexPath: IndexPath)
 }
 
 class ReminderItemTableCell: UITableViewCell {
@@ -26,6 +26,6 @@ class ReminderItemTableCell: UITableViewCell {
     var objectId: NSManagedObjectID!
 
     @IBAction func completedPrimaryActionTriggered(_ sender: Any) {
-        self.delegate.completedPrimaryActionTriggered(objectId: self.objectId,indexPath: self.indexPath,button: self.completedButton)
+        self.delegate.completedPrimaryActionTriggered(objectId: self.objectId,indexPath: self.indexPath)
     }
 }

@@ -25,12 +25,13 @@ class CTableViewController: UITableViewController, ReminderItemTableCellProtocol
         tableView.reloadData()
     }
 
-    func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath, button: NotCompletedButton){
+    func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath){
         self.dataManager.setIsCompleted(completed: false, objectId: objectId)
         self.items.remove(at: indexPath.row)
-        button.completed = false
-        button.setNeedsDisplay()
-        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.right)
+        let cell = tableView.cellForRow(at: indexPath) as! ReminderItemTableCell
+        cell.completedButton.completed = false
+        cell.completedButton.setNeedsDisplay()
+        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
         tableView.reloadData()
     }
 

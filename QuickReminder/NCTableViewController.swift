@@ -23,6 +23,43 @@ class TempReminderItem {
     }
 }
 
+enum DateRoundingType {
+    case round
+    case ceil
+    case floor
+}
+
+extension Date {
+    func format(date: Date) -> String {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        if(calendar.isDateInToday(date)) {
+            dateFormatter.dateFormat = "HH:mm"
+            return "Today, \(dateFormatter.string(from: date))"
+        }
+        if(calendar.component(.year, from: Date()) == calendar.component(.year, from: date)) {
+            dateFormatter.dateFormat = "dd.MM. HH:mm"
+        }
+        return dateFormatter.string(from: date)
+    }
+
+    func rounded(minutes: TimeInterval, rounding: DateRoundingType = .round) -> Date {
+        return rounded(seconds: minutes * 60, rounding: rounding)
+    }
+    func rounded(seconds: TimeInterval, rounding: DateRoundingType = .round) -> Date {
+        var roundedInterval: TimeInterval = 0
+        switch rounding {
+        case .round:
+            roundedInterval = (timeIntervalSinceReferenceDate / seconds).rounded() * seconds
+        case .ceil:
+            roundedInterval = ceil(timeIntervalSinceReferenceDate / seconds) * seconds
+        case .floor:
+            roundedInterval = floor(timeIntervalSinceReferenceDate / seconds) * seconds
+        }
+        return Date(timeIntervalSinceReferenceDate: roundedInterval)
+    }
+}
+
 class NCTableViewController: UITableViewController, NewReminderTableCellProtocol, DatePickerTableCellProtocol, ReminderItemTableCellProtocol {
 
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
@@ -68,7 +105,9 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     }
 
     func onOffNotifPrimaryActionTriggered(isNotifOn: Bool) {
-        self.hideDatePickerRow = isNotifOn
+        self.hideDatePickerRow = !isNotifOn
+        print(isNotifOn)
+        self.tempReminderItem.notifDate = !isNotifOn ? nil : self.tempReminderItem.notifDate
         tableView.beginUpdates()
         tableView.endUpdates()
     }
@@ -82,11 +121,12 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         tableView.endUpdates()
     }
 
-    func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath, button: NotCompletedButton) {
+    func completedPrimaryActionTriggered(objectId: NSManagedObjectID, indexPath: IndexPath) {
         self.dataManager.setIsCompleted(completed: true, objectId: objectId)
         self.items.remove(at: indexPath.row - 2)
-        button.completed = true
-        button.setNeedsDisplay()
+        let cell = tableView.cellForRow(at: indexPath) as! ReminderItemTableCell
+        cell.completedButton.completed = true
+        cell.completedButton.setNeedsDisplay()
         tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.right)
         tableView.reloadData()
     }
@@ -106,6 +146,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
 
 
     func reminderTextEditingDidBegin() {
+        print("BEGIN")
         self.sentRightBarButton(type: RightBarButton.cancel)
         self.hideDatePickerRow = false
         tableView.beginUpdates()
@@ -156,7 +197,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         let cell = tableView.dequeueReusableCell(withIdentifier: "reminderItemCell", for: indexPath) as! ReminderItemTableCell
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-        if(cell.dateLabel == nil) {
+        if(item.notifDate == nil) {
             cell.dateLabel.isHidden = true
             let centerYCon = NSLayoutConstraint(item: cell.label,
                                                 attribute: .centerY,
@@ -166,9 +207,13 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
                                                 multiplier: 1.0,
                                                 constant: 0.0)
             NSLayoutConstraint.activate([centerYCon])
+        } else {
+            cell.dateLabel.text = Date().format(date: item.notifDate as! Date)
         }
         cell.indexPath = indexPath
         cell.objectId = item.objectID
+        cell.completedButton.completed = item.completed
+        cell.completedButton.setNeedsDisplay()
         cell.delegate = self
         return cell
 

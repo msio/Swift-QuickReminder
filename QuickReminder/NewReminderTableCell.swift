@@ -52,22 +52,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
     }
     
     func datePickerChanged(date: Date) {
-        self.setDateLabel(date: date)
-    }
-    
-    func setDateLabel(date:Date){
-        let currentDate = Date()
-        let calendar = Calendar.current
-        let dateFormatter = DateFormatter()
-        if(calendar.isDateInToday(date)){
-            dateFormatter.dateFormat = "HH:mm"
-            self.dateLabel.text = "Today \(dateFormatter.string(from: date))"
-        }else {
-            if(calendar.component(.year, from: currentDate) == calendar.component(.year, from: date)){
-                dateFormatter.dateFormat = "dd.MM. HH:mm"
-            }
-            self.dateLabel.text  = dateFormatter.string(from: date)
-        }
+         self.dateLabel.text  = Date().format(date: date)
     }
     
 
@@ -87,8 +72,7 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
         self.onOffNotifButton.isHidden = true
         // reset icon to ON state
         self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
-        let currentDate = Date()
-        self.setDateLabel(date: currentDate)
+        self.dateLabel.text  = Date().format(date: Date())
     }
     
     @IBAction func reminderTextPrimaryActionTriggered(_ sender: Any) {
@@ -109,8 +93,9 @@ class NewReminderTableCell : UITableViewCell,DatePickerTableCellProtocol{
             self.dateLabel.isHidden = false;
             self.onOffNotifButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
         }
-        delegate?.onOffNotifPrimaryActionTriggered(isNotifOn: isNotifOn)
         self.isNotifOn  = !isNotifOn
+        delegate?.onOffNotifPrimaryActionTriggered(isNotifOn: isNotifOn)
+        
 
     }
     
