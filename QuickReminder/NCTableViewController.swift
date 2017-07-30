@@ -38,7 +38,7 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
     var tempReminderItem = TempReminderItem()
     var dataManager = DataManager()
     var rightBarButtonType: RightBarButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -154,10 +154,19 @@ class NCTableViewController: UITableViewController, NewReminderTableCellProtocol
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "reminderItemCell", for: indexPath) as! ReminderItemTableCell
-
         let item = items[indexPath.row - 2]
         cell.label?.text = item.text
-        cell.label.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 46).isActive = true
+        if(cell.dateLabel == nil) {
+            cell.dateLabel.isHidden = true
+            let centerYCon = NSLayoutConstraint(item: cell.label,
+                                                attribute: .centerY,
+                                                relatedBy: .equal,
+                                                toItem: cell,
+                                                attribute: .centerY,
+                                                multiplier: 1.0,
+                                                constant: 0.0)
+            NSLayoutConstraint.activate([centerYCon])
+        }
         cell.indexPath = indexPath
         cell.objectId = item.objectID
         cell.delegate = self
